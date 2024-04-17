@@ -67,6 +67,11 @@ namespace FileUpload.Services
         {
             try
             {
+                var _Filename = fileName.Split('.');
+                var currentTime = DateTime.Now;
+                var datePart = currentTime.ToString("MM/dd/yyyy");
+                var timePart = currentTime.ToString("HH:mm:ss");
+
                 var filePath = Common.GetFilePath(fileName);
                 var provider = new FileExtensionContentTypeProvider();
                 if (!provider.TryGetContentType(filePath, out var contentType))
@@ -74,6 +79,10 @@ namespace FileUpload.Services
                     contentType = "application/octet-stream";
                 }
                 var fileBytes = await File.ReadAllBytesAsync(filePath);
+                await _fileDataService.InsertDownloadHistoryAsync(_Filename[0], datePart, timePart);
+
+
+
                 return (fileBytes, contentType, Path.GetFileName(filePath));
             }
             catch (FileNotFoundException)

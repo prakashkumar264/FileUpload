@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FileUpload.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 
@@ -9,5 +10,7 @@ namespace FileUpload.Models
         public FilesContext(DbContextOptions<FilesContext> options) : base(options) { }
 
         public DbSet<FileData> files { get; set; }
+
+        public DbSet<DownloadHistory> downloadhistory { get; set; }
     }
 }

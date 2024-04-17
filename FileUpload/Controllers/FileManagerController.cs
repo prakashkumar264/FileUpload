@@ -50,7 +50,7 @@ namespace FileUpload.Controllers
                 // Check if current time is within allowed time period (e.g., 8:00 AM to 2:00 PM)
                 var currentTime = DateTime.Now.TimeOfDay;
                 var allowedStartTime = new TimeSpan(8, 0, 0);
-                var allowedEndTime = new TimeSpan(14, 0, 0);
+                var allowedEndTime = new TimeSpan(23, 59, 0);
 
                 if (currentTime < allowedStartTime || currentTime > allowedEndTime)
                 {

@@ -37,6 +37,25 @@ namespace FileUpload.Services
             }
         }
 
+        public async Task InsertDownloadHistoryAsync(string fileName, string downloadDate, string downloadTime)
+        {
+            try
+            {
+                var downloadHistory = new DownloadHistory
+                {
+                    filename = fileName,
+                    downloaddate = downloadDate,
+                    downloadtime = downloadTime
+                };
+                _context.downloadhistory.Add(downloadHistory);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to insert download history: {ex.Message}");
+            }
+        }
+
 
 
     }
