@@ -17,34 +17,7 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Method == "POST")
-            {
-                var formCollection = await context.Request.ReadFormAsync();
-                var file = formCollection.Files.GetFile("file");
 
-                if (file != null)
-                {
-                    // Validate file type
-                    string fileExtension = Path.GetExtension(file.FileName);
-                    if (Array.IndexOf(_allowedFileTypes, fileExtension) == -1)
-                    {
-                        context.Response.StatusCode = 400; // Bad Request
-                        await context.Response.WriteAsync("Uploaded file type is not allowed.");
-                        return;
-                    }
-
-                    // Validate file size
-                    long fileSizeMB = file.Length / (1024 * 1024); // Convert bytes to megabytes
-                    if (fileSizeMB > _maxFileSizeMB || fileSizeMB < _minFileSizeMB)
-                    {
-                        context.Response.StatusCode = 400; // Bad Request
-                        await context.Response.WriteAsync($"Uploaded file size should be between {_minFileSizeMB}MB and {_maxFileSizeMB}MB.");
-                        return;
-                    }
-                }
-            }
-
-            // Call the next middleware in the pipeline
             await _next(context);
         }
     }
